@@ -1,4 +1,3 @@
-
 # Header for Rcpp and RcppArmadillo
 library(Rcpp)
 library(RcppArmadillo)
@@ -9,22 +8,24 @@ sourceCpp("LassoInC.cpp")
 # Source your LASSO functions from HW4 (make sure to move the corresponding .R file in the current project folder)
 source("LassoFunctions.R")
 
-# Do at least 2 tests for soft-thresholding function below. You are checking output agreements on at least 2 separate inputs
-#################################################
-
-
-# Do at least 2 tests for lasso objective function below. You are checking output agreements on at least 2 separate inputs
-#################################################
-
-
-# Do at least 2 tests for fitLASSOstandardized function below. You are checking output agreements on at least 2 separate inputs
-#################################################
+testthat::test_that("Test for LassoInC.cpp", {
+  # Do at least 2 tests for soft-thresholding function below. You are checking output agreements on at least 2 separate inputs
+  #################################################
+  testthat::expect_equal(soft(3.5, 1), soft_c(3.5, 1))
+  testthat::expect_equal(soft(-5, 1), soft_c(-5, 1))
+  
+  # Do at least 2 tests for lasso objective function below. You are checking output agreements on at least 2 separate inputs
+  #################################################
+  
+  # Do at least 2 tests for fitLASSOstandardized function below. You are checking output agreements on at least 2 separate inputs
+  #################################################
+  
+  # Do at least 2 tests for fitLASSOstandardized_seq function below. You are checking output agreements on at least 2 separate inputs
+  #################################################
+})
 
 # Do microbenchmark on fitLASSOstandardized vs fitLASSOstandardized_c
 ######################################################################
-
-# Do at least 2 tests for fitLASSOstandardized_seq function below. You are checking output agreements on at least 2 separate inputs
-#################################################
 
 # Do microbenchmark on fitLASSOstandardized_seq vs fitLASSOstandardized_seq_c
 ######################################################################
