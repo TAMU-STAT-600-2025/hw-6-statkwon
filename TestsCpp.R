@@ -32,6 +32,8 @@ testthat::test_that("Test for LassoInC.cpp", {
   Ytilde2 <- out2$Ytilde
   lambda2 <- 0.3
   
+  beta_start <- rep(0, p1)
+  
   # Do at least 2 tests for soft-thresholding function below. You are checking output agreements on at least 2 separate inputs
   #################################################
   testthat::expect_equal(soft(3.5, 1), soft_c(3.5, 1))
@@ -52,6 +54,11 @@ testthat::test_that("Test for LassoInC.cpp", {
   
   # Do at least 2 tests for fitLASSOstandardized function below. You are checking output agreements on at least 2 separate inputs
   #################################################
+  testthat::expect_equal(
+    fitLASSOstandardized(Xtilde1, Ytilde1, lambda1, beta_start)$beta,
+    fitLASSOstandardized_c(Xtilde1, Ytilde1, lambda1, beta_start),
+    check.attributes = FALSE
+  )
   
   # Do at least 2 tests for fitLASSOstandardized_seq function below. You are checking output agreements on at least 2 separate inputs
   #################################################

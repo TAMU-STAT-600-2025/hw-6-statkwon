@@ -23,7 +23,7 @@ double lasso_c(const arma::mat& Xtilde, const arma::colvec& Ytilde,
 // [[Rcpp::export]]
 arma::colvec fitLASSOstandardized_c(const arma::mat& Xtilde, const arma::colvec& Ytilde, double lambda, const arma::colvec& beta_start, double eps = 0.001){
   // Your function code goes here
-  return nullptr;
+  return arma::colvec();
 }  
 
 // Lasso coordinate-descent on standardized data with supplied lambda_seq. 
@@ -32,5 +32,5 @@ arma::colvec fitLASSOstandardized_c(const arma::mat& Xtilde, const arma::colvec&
 // [[Rcpp::export]]
 arma::mat fitLASSOstandardized_seq_c(const arma::mat& Xtilde, const arma::colvec& Ytilde, const arma::colvec& lambda_seq, double eps = 0.001){
   // Your function code goes here
-  return nullptr;
+  return arma::mat();
 }
