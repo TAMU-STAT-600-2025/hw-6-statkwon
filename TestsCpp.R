@@ -69,13 +69,26 @@ testthat::test_that("Test for LassoInC.cpp", {
     fitLASSOstandardized_seq_c(Xtilde1, Ytilde1, lambda_seq),
     check.attributes = FALSE
   )
+  
+  # Do microbenchmark on fitLASSOstandardized vs fitLASSOstandardized_c
+  ######################################################################
+  res <- microbenchmark::microbenchmark(
+    fitLASSOstandardized(Xtilde1, Ytilde1, lambda1, beta_start),
+    fitLASSOstandardized_c(Xtilde1, Ytilde1, lambda1, beta_start),
+    times = 10
+  )
+  print(res)
+  
+  # Do microbenchmark on fitLASSOstandardized_seq vs fitLASSOstandardized_seq_c
+  ######################################################################
+  res <- microbenchmark::microbenchmark(
+    out <- fitLASSOstandardized_seq(Xtilde1, Ytilde1, lambda_seq),
+    fitLASSOstandardized_seq_c(Xtilde1, Ytilde1, out$lambda_seq),
+    times = 10
+  )
+  print(res)
 })
 
-# Do microbenchmark on fitLASSOstandardized vs fitLASSOstandardized_c
-######################################################################
-
-# Do microbenchmark on fitLASSOstandardized_seq vs fitLASSOstandardized_seq_c
-######################################################################
 
 # Tests on riboflavin data
 ##########################
