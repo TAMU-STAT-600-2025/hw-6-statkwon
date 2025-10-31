@@ -62,6 +62,13 @@ testthat::test_that("Test for LassoInC.cpp", {
   
   # Do at least 2 tests for fitLASSOstandardized_seq function below. You are checking output agreements on at least 2 separate inputs
   #################################################
+  out <- fitLASSOstandardized_seq(Xtilde1, Ytilde1)
+  lambda_seq <- out$lambda_seq
+  testthat::expect_equal(
+    out$beta,
+    fitLASSOstandardized_seq_c(Xtilde1, Ytilde1, lambda_seq),
+    check.attributes = FALSE
+  )
 })
 
 # Do microbenchmark on fitLASSOstandardized vs fitLASSOstandardized_c
