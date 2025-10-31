@@ -9,6 +9,29 @@ sourceCpp("LassoInC.cpp")
 source("LassoFunctions.R")
 
 testthat::test_that("Test for LassoInC.cpp", {
+  # Generate mocking data
+  n1 <- 20
+  p1 <- 5
+  X1 <- matrix(rnorm(n1 * p1), n1, p1)
+  beta1 <- rnorm(p1)
+  epsilon1 <- rnorm(n1)
+  Y1 <- X1 %*% beta1 + epsilon1
+  out1 <- standardizeXY(X1, Y1)
+  Xtilde1 <- out1$Xtilde
+  Ytilde1 <- out1$Ytilde
+  lambda1 <- 0.1
+  
+  n2 <- 100
+  p2 <- 10
+  X2 <- matrix(rnorm(n2 * p2), n2, p2)
+  beta2 <- rnorm(p2)
+  epsilon2 <- rnorm(n2)
+  Y2 <- X2 %*% beta2 + epsilon2
+  out2 <- standardizeXY(X2, Y2)
+  Xtilde2 <- out2$Xtilde
+  Ytilde2 <- out2$Ytilde
+  lambda2 <- 0.3
+  
   # Do at least 2 tests for soft-thresholding function below. You are checking output agreements on at least 2 separate inputs
   #################################################
   testthat::expect_equal(soft(3.5, 1), soft_c(3.5, 1))
@@ -16,6 +39,16 @@ testthat::test_that("Test for LassoInC.cpp", {
   
   # Do at least 2 tests for lasso objective function below. You are checking output agreements on at least 2 separate inputs
   #################################################
+  testthat::expect_equal(
+    lasso(Xtilde1, Ytilde1, beta1, lambda1),
+    lasso_c(Xtilde1, Ytilde1, beta1, lambda1),
+    check.attributes = FALSE
+  )
+  testthat::expect_equal(
+    lasso(Xtilde2, Ytilde2, beta2, lambda2),
+    lasso_c(Xtilde2, Ytilde2, beta2, lambda2),
+    check.attributes = FALSE
+  )
   
   # Do at least 2 tests for fitLASSOstandardized function below. You are checking output agreements on at least 2 separate inputs
   #################################################
